@@ -1,4 +1,7 @@
 using GalaSoft.MvvmLight;
+using System;
+using System.Collections.ObjectModel;
+using Weather.Model;
 
 namespace Weather.ViewModel
 {
@@ -16,17 +19,38 @@ namespace Weather.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-       
+        public const string DayListPropertyName = "DayList";
+
+        private ObservableCollection<Day> _dayList = null;
+
+        public ObservableCollection<Day> DayList
+        {
+            get { return _dayList; }
+            set
+            {
+                if(_dayList == value)
+                {
+                    return;
+                }
+
+                _dayList = value;
+            }
+        }
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+            if (IsInDesignMode)
+            {
+                DayList = new ObservableCollection<Day>();
+                DayList.Add(new Day { temp = 20, Time = DateTime.Now });
+                DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(1) });
+                DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(2) });
+                DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(3) });
+                DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(4) });
+            }
+            else
+            {
+                // Code runs "for real"
+            }
         }
     }
 }
