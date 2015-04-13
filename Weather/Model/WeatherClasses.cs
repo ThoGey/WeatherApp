@@ -61,6 +61,14 @@ namespace Weather.Model
         public List<Weather> weather { get; set; }
         public double speed { get; set; }
         public double deg { get; set; }
+
+        public string IconPath
+        {
+            get
+            {
+                return "/icons/" + weather[0].icon.Replace("d","").Replace("n","") + ".png";
+            }
+        }
     }
 
     public class RootObject

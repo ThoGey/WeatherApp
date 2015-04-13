@@ -1,6 +1,9 @@
 using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Windows;
 using Weather.Model;
 
 namespace Weather.ViewModel
@@ -36,20 +39,55 @@ namespace Weather.ViewModel
                 _dayList = value;
             }
         }
+        
+
+        public const string CurrentDayPropertyName = "CurrentDay";
+
+        private Day _currentDay = null;
+
+        public Day CurrentDay
+        {
+            get { return _currentDay; }
+            set
+            {
+                if (_currentDay == value)
+                {
+                    return;
+                }
+
+                _currentDay = value;
+            }
+        }
+
         public MainViewModel()
         {
             if (IsInDesignMode)
             {
                 DayList = new ObservableCollection<Day>();
-                DayList.Add(new Day { temp = 20, Time = DateTime.Now });
+                DayList.Add(new Day { temp = 20, Time = DateTime.Now, weather = new System.Collections.Generic.List<Model.Weather> { new Model.Weather { icon = "01d" }} });
                 DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(1) });
                 DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(2) });
                 DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(3) });
                 DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(4) });
+                CurrentDay = DayList[0]; //De huidige dag is nu de de eerste dag in de array;
             }
             else
             {
-                // Code runs "for real"
+                WebClient client = new WebClient();
+                client.DownloadStringCompleted += (s, e) => //lambda
+                    {
+                        if (e.Error == null)
+                        {
+                            RootObject result = JsonConvert.DeserializeObject<RootObject>(e.Result);
+                            DayList = new ObservableCollection<Day>(result.list);
+                            CurrentDay = DayList[0];
+                        }
+                        else
+                        {
+                            MessageBox.Show("Sorry, try again.");
+                        }//runt deze code na download complete
+                    };
+                client.DownloadStringAsync(new Uri("http://api.openweathermap.org/data/2.2/forecast/city?q=hasselt&mode=daily_compact&units=metric"));
             }
         }
     }
