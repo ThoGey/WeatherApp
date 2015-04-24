@@ -29,15 +29,7 @@ namespace Weather.ViewModel
         public ObservableCollection<Day> DayList
         {
             get { return _dayList; }
-            set
-            {
-                if(_dayList == value)
-                {
-                    return;
-                }
-
-                _dayList = value;
-            }
+            set { _dayList = value; }
         }
         
 
@@ -48,15 +40,7 @@ namespace Weather.ViewModel
         public Day CurrentDay
         {
             get { return _currentDay; }
-            set
-            {
-                if (_currentDay == value)
-                {
-                    return;
-                }
-
-                _currentDay = value;
-            }
+            set { _currentDay = value; }
         }
 
         public MainViewModel()
@@ -69,7 +53,8 @@ namespace Weather.ViewModel
                 DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(2) });
                 DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(3) });
                 DayList.Add(new Day { temp = 20, Time = DateTime.Now.AddDays(4) });
-                CurrentDay = DayList[0]; //De huidige dag is nu de de eerste dag in de array;
+                CurrentDay = DayList[0]; //De huidige dag is nu de de eerste dag in de array
+                //Deze waardes zijn valse waardes, ze zijn enkel om de designer view voor te stellen
             }
             else
             {
@@ -85,7 +70,7 @@ namespace Weather.ViewModel
                         else
                         {
                             MessageBox.Show("Sorry, try again.");
-                        }//runt deze code na download complete
+                        }
                     };
                 client.DownloadStringAsync(new Uri("http://api.openweathermap.org/data/2.2/forecast/city?q=hasselt&mode=daily_compact&units=metric"));
             }

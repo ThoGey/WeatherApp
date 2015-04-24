@@ -66,7 +66,7 @@ namespace Weather.Model
         {
             get
             {
-                return "/icons/" + weather[0].icon.Replace("d","").Replace("n","") + ".png";
+                return "/Icons/" + weather[0].icon.Replace("d","").Replace("n","") + ".png";
             }
         }
     }

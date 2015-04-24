@@ -42,14 +42,15 @@
                 <StaticResource ResourceKey="DayTemplate"/>
             </ListBox.ItemTemplate>
         </ListBox>
-        
+
         <Grid Grid.Row="1" DataContext="{Binding CurrentDay}">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Image Grid.Row="0" Source="{Binding IconPath, Mode=OneWay}"></Image>
-            <TextBlock Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding temp, StringFormat=\{0:0°\}}" Style="{StaticResource PhoneTextHugeStyle}"></TextBlock> 
+            <Image Grid.Row="0" Source="{Binding IconPath, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding temp, StringFormat=\{0:0°\}}" Style="{StaticResource PhoneTextHugeStyle}"></TextBlock>
+            <Image Grid.Row="1" Source="/Icons/map.png" MaxHeight="100" RenderTransformOrigin="0.87,0.82" Margin="184,125,-184,-125"/>
         </Grid>
     </Grid>
 
